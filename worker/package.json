@@ -1,0 +1,26 @@
+{
+	"name": "roman-numerals-worker",
+	"version": "1.0.0",
+	"description": "A nodejs worker for transforming arabin-roman numerals",
+	"main": "index.js",
+	"scripts": {
+		"test": "npm run clean && npm run lint && jest",
+		"clean": "rimraf dist coverage",
+		"prod": "NODE_ENV=prod tsc && node dist/server.js",
+		"dev": "NODE_ENV=dev ts-node-dev --respawn --transpileOnly server.ts"
+	},
+	"devDependencies": {
+		"ts-jest": "^25.2.1",
+		"ts-node-dev": "^1.0.0-pre.44",
+		"typescript": "^3.8.2",
+		"rimraf": "^3.0.2",
+		"jest": "^25.1.0",
+		"@types/node": "^13.9.0"
+	},
+	"author": "Georgios Kampitakis",
+	"license": "ISC",
+	"dependencies": {
+		"fastify": "^2.13.1",
+		"pino-pretty": "^4.0.0"
+	}
+}
