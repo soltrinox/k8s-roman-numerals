@@ -8,9 +8,9 @@ class Server {
 			logger: {
 				prettyPrint: {
 					colorize: true,
-					ignore: 'pid,hostname,time',
-				},
-			},
+					ignore: 'pid,hostname,time'
+				}
+			}
 		});
 		this.setupServer();
 	}
