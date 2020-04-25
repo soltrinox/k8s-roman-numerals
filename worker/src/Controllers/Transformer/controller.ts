@@ -1,50 +1,51 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { ServerResponse } from 'http';
-import { Calculator, ROMAN_REGEX } from '../../Components/';
+import { Calculator, ROMAN_REGEX, RedisClient } from '../../Components/';
 
 class Controller {
 	private calculator: Calculator;
+	private redisClient: RedisClient;
 	public constructor() {
 		this.calculator = new Calculator();
+		this.redisClient = new RedisClient();
 	}
 
-	public RomanToArabic(
-		req: FastifyRequest,
-		res: FastifyReply<ServerResponse>
-	): any {
+	public RomanToArabic(req: FastifyRequest, res: FastifyReply<ServerResponse>): any {
 		const value = req.params.number.toUpperCase();
 		if (!value || !ROMAN_REGEX.test(value))
-			return this.handleError(req, res, 400, `Incorrect Input: ${value}`);
+			return this.handleError(req, res, 400, Error(`Incorrect Input: ${value}`));
 
-		res.status(200).send({ value: this.calculator.toArabic(value) });
+		try {
+			this.redisClient.save('arabic', value, this.calculator.toArabic(value));
+		} catch (error) {
+			return this.handleError(req, res, 500, error);
+		}
+
+		res.status(200).send({ message: 'Success' });
 	}
 
 	public ArabicToRoman(req, res): any {
 		const value = Number(req.params.number);
 		if (!value || !Number.isInteger(value) || value >= 5000 || value < 1)
-			return this.handleError(
-				req,
-				res,
-				400,
-				`Incorrect Input: ${req.params.number}`
-			);
+			return this.handleError(req, res, 400, Error(`Incorrect Input: ${req.params.number}`));
 
-		res.status(200).send({ value: this.calculator.toRoman(value) });
+		try {
+			this.redisClient.save('roman', value.toString(), this.calculator.toRoman(value));
+		} catch (error) {
+			return this.handleError(req, res, 500, error);
+		}
+
+		res.status(200).send({ message: 'Success' });
 	}
 
-	private handleError(//TODO: test this later
-		req: FastifyRequest,
-		res: FastifyReply<ServerResponse>,
-		status = 500,
-		error?: any
-	) {
-		req.log.error(error ? error : 'Unexpected Error');
-		return res.status(status).send(error);
+	private handleError(req: FastifyRequest, res: FastifyReply<ServerResponse>, status: number, error: Error) {
+		const message = error.message;
+		req.log.error(message);
+		return res.status(status).send({ message });
 	}
 }
 
 export default new Controller();
 
 //TODO: Set up environment
-//TODO: redis writing
 //TODO: docker dev and prod
