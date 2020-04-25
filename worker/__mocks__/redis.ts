@@ -1,4 +1,5 @@
-export function createClient() { //TODO: extend with env variables
+export function createClient(param) {
+	ConstructorSpy(param);
 	return {
 		set(key: string, value: any) {
 			SetSpy(key, value);
@@ -7,4 +8,5 @@ export function createClient() { //TODO: extend with env variables
 	};
 }
 
-export const SetSpy = jest.fn();
+export const SetSpy = jest.fn(),
+	ConstructorSpy = jest.fn();
