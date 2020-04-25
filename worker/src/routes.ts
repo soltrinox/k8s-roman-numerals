@@ -1,4 +1,4 @@
-import fastify, { FastifyInstance } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import TransformerRoutes from './Controllers';
 
 export default (server: FastifyInstance) => {
