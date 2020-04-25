@@ -25,3 +25,15 @@ export class Calculator {
 		return value;
 	}
 }
+
+export class RedisClient {
+	public static SaveSpy = jest.fn();
+	public static Error = false;
+
+	public save(type: string, key: string, value: any) {
+        if (RedisClient.Error) throw new Error('Unexpected Error');
+        
+		RedisClient.SaveSpy(type, key, value);
+		return;
+	}
+}
