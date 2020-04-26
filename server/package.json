@@ -1,13 +1,20 @@
 {
-	"name": "roman-numerals-worker",
+	"name": "gateway-server",
 	"version": "1.0.0",
-	"description": "A nodejs worker for transforming arabic-roman numerals",
+	"description": "Server responsible for communicating with all moving parts",
 	"main": "index.js",
 	"scripts": {
 		"test": "npm run clean && jest",
 		"clean": "rimraf dist coverage",
 		"start:prod": "tsc && NODE_ENV=prod node dist/server.js",
 		"start:dev": "NODE_ENV=dev ts-node-dev --poll --respawn --transpileOnly server.ts"
+	},
+	"dependencies": {
+		"@gkampitakis/mongo-client": "^1.2.0",
+		"apollo-server-fastify": "^2.12.0",
+		"dotenv": "^8.2.0",
+		"fastify": "^2.13.1",
+		"redis": "^3.0.2"
 	},
 	"devDependencies": {
 		"@types/dotenv": "^8.2.0",
@@ -52,11 +59,5 @@
 		}
 	},
 	"author": "Georgios Kampitakis",
-	"license": "ISC",
-	"dependencies": {
-		"dotenv": "^8.2.0",
-		"fastify": "^2.13.1",
-		"pino-pretty": "^4.0.0",
-		"redis": "^3.0.2"
-	}
+	"license": "ISC"
 }
