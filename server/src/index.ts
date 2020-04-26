@@ -1,6 +1,8 @@
-import { ApolloServer, gql } from 'apollo-server-fastify';
+import { ApolloServer } from 'apollo-server-fastify';
 import fastify, { FastifyInstance } from 'fastify';
 import schema from './schema';
+import configuration from '../configuration';
+import { MongoClient } from '@gkampitakis/mongo-client';
 
 class Server {
 	private server: FastifyInstance;
@@ -16,6 +18,7 @@ class Server {
 			}
 		});
 		this.setupServer();
+		this.setupMongo();
 	}
 
 	private setupServer() {
@@ -23,8 +26,21 @@ class Server {
 		this.server.register(this.apollo.createHandler());
 	}
 
-	public start(port: number) {
-		return this.server.listen(port, '0.0.0.0');
+	private setupMongo() {
+		const { host, port } = configuration.mongo;
+		MongoClient.connect(`${host}:${port}`, 'numerals', {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		})
+			.then(() => console.log('Connected to database'))
+			.catch((err) => {
+				console.log(err);
+				process.exit(1);
+			});
+	}
+
+	public start() {
+		return this.server.listen(configuration.port, '0.0.0.0');
 	}
 }
 

@@ -1,15 +1,14 @@
-const arabics = [{ value: 10 }, { value: 12 }, { value: 14 }, { value: 15 }, { value: 16 }],
-	romans = [{ value: '10' }, { value: '12' }, { value: '14' }, { value: '15' }, { value: '16' }];
+import Controller from './controller';
 
 export const resolvers = {
 	Query: {
-		arabics: () => arabics,
-		romans: () => romans
+		arabics: () => [],
+		romans: () => []
 	},
 	Mutation: {
 		deleteAll: () => ({ message: 'Everything deleted' }),
-		convertToRoman(_, args, __, ___) {
-			console.log(args);
+		convertToRoman(_, { value }, __, ___) {
+			Controller.convertToRoman(value);
 			return { message: 'Value converting' };
 		},
 		convertToArabic: (_, args, __, ___) => {
