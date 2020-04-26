@@ -1,0 +1,10 @@
+coverage
+node_modules
+.gitignore
+.prettierc
+Dockerfile.dev
+Dockerfile.prod
+docker-compose.yml
+README.md
+!.env.prod
+!.env.dev

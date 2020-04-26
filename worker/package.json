@@ -5,8 +5,9 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "npm run clean && jest",
+		"tsc": "tsc",
 		"clean": "rimraf dist coverage",
-		"start:prod": "tsc && NODE_ENV=prod node dist/server.js",
+		"start:prod": "NODE_ENV=prod node dist/server.js",
 		"start:dev": "NODE_ENV=dev ts-node-dev --poll --respawn --transpileOnly server.ts"
 	},
 	"devDependencies": {

@@ -1,0 +1,23 @@
+FROM node:alpine as testing
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . .
+
+RUN npm run test && npm run tsc
+
+RUN npm prune --production
+
+RUN rm -rf __mocks__ src coverage tsconfig.json *.ts Dockerfile.prod .prettierc
+
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=testing /app . 
+
+CMD ["npm","run","start:prod"]
