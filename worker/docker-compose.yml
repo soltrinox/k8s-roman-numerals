@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - /app/node_modules
+      - .:/app
+    ports:
+      - 4000:4000
+    environment:
+      - PORT=4000
+  redis:
+    container_name: redis
+    image: 'redis:4-alpine'
+    command: redis-server --requirepass 123456
+    ports:
+      - '6379:6379'

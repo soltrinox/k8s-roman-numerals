@@ -7,7 +7,7 @@
 		"test": "npm run clean && jest",
 		"clean": "rimraf dist coverage",
 		"start:prod": "tsc && NODE_ENV=prod node dist/server.js",
-		"start:dev": "NODE_ENV=dev ts-node-dev --respawn --transpileOnly server.ts"
+		"start:dev": "NODE_ENV=dev ts-node-dev --poll --respawn --transpileOnly server.ts"
 	},
 	"devDependencies": {
 		"@types/dotenv": "^8.2.0",

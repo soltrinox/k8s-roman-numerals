@@ -20,7 +20,7 @@ class Server {
 	}
 
 	public start(port: number) {
-		return this.server.listen(port);
+		return this.server.listen(port, '0.0.0.0');
 	}
 }
 
