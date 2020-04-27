@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  worker:
+    container_name: worker
+    build:
+      context: ./worker
+      # dockerfile: Dockerfile.dev # For development
+      dockerfile: Dockerfile.prod
+    restart: always
+    # volumes: # For development live reload support
+    #   - /app/node_modules
+    #   - ./worker:/app
+    ports:
+      - 4000:4000
+    environment:
+      - PORT=4000
+  redis:
+    container_name: redis
+    image: 'redis:4-alpine'
+    command: redis-server --requirepass 123456
+    ports:
+      - '6379:6379'
+  mongo:
+    container_name: mongo
+    volumes:
+      - ./data:/data/db
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017

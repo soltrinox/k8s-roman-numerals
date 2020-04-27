@@ -1,4 +1,5 @@
 import { Model, Schema } from '@gkampitakis/mongo-client';
+import fetch from 'node-fetch';
 
 class NumeralsController {
 	private model: Model;
@@ -39,16 +40,18 @@ class NumeralsController {
 	}
 
 	public convertToRoman(value: number): Promise<any> {
-		//TODO: return message and send request to worker
-		return this.model.create(
-			{
-				arabic: value,
-				roman: '0'
-			},
-			true
-		);
+		return this.sendRequest('roman', value);
 	}
-	// public convertToArabic(value: string): void {}
+
+	public convertToArabic(value: string): Promise<any> {
+		return this.sendRequest('arabic', value);
+	}
+
+	private sendRequest(type: 'roman', value: number): Promise<Response>;
+	private sendRequest(type: 'arabic', value: string): Promise<Response>;//TODO: make the url configurable
+	private sendRequest(type: any, value: any) {
+		return fetch(`http://localhost:4000/${type}/${value}`).then((res) => res.json());
+	}
 }
 
 export default new NumeralsController();
