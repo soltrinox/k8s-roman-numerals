@@ -45,14 +45,3 @@ class Server {
 }
 
 export default new Server();
-
-// .
-// ├── package.json
-// └── src
-//     ├── books
-//     │   ├── Book.js
-//     │   ├── data.js
-//     │   ├── index.js
-//     │   ├── resolvers.js
-//     │   └── typeDef.js
-//     └── index.js

@@ -2,8 +2,8 @@ import Controller from './controller';
 
 export const resolvers = {
 	Query: {
-		arabics: () => [],
-		romans: () => []
+		arabics: () => Controller.retrieve('arabic'),
+		romans: () => Controller.retrieve('roman')
 	},
 	Mutation: {
 		deleteAll: () => ({ message: 'Everything deleted' }),

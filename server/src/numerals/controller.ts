@@ -21,7 +21,18 @@ class NumeralsController {
 
 	// public deleteAll(): Promise<void> {}
 
-	// public retrieve(type: 'arabic' | 'roman'): Promise<any> {} //TODO: add typess]
+	public retrieve(type: 'arabic' | 'roman'): Promise<any> {
+		return this.model
+			.find(
+				{},
+				{
+					fields: {
+						[type]: 1
+					}
+				}
+			)
+			.toArray();
+	}
 
 	public convertToRoman(value: number): Promise<any> {
 		return this.model.create(

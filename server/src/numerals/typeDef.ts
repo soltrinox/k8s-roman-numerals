@@ -3,14 +3,12 @@ import { gql } from 'apollo-server-fastify';
 export const typeDef = gql`
 	type Arabic {
 		_id: String!
-		value: Int!
-		roman: String!
+		arabic: Int!
 	}
 
 	type Roman {
 		_id: String!
-		value: String!
-		arabic: Int!
+		roman: String!
 	}
 
 	type Message {
