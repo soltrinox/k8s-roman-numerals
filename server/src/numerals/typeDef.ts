@@ -16,8 +16,8 @@ export const typeDef = gql`
 	}
 
 	type Query {
-		arabics: [Arabic]
-		romans: [Roman]
+		arabics(limit: Int, skip: Int): [Arabic]
+		romans(limit: Int, skip: Int): [Roman]
 	}
 
 	type Mutation {

@@ -19,9 +19,11 @@ class NumeralsController {
 		);
 	}
 
-	// public deleteAll(): Promise<void> {}
+	public deleteAll(): Promise<any> {
+		return this.model.deleteMany({});
+	}
 
-	public retrieve(type: 'arabic' | 'roman'): Promise<any> {
+	public retrieve(type: 'arabic' | 'roman', limit = 10, skip = 0): Promise<any> {
 		return this.model
 			.find(
 				{},
@@ -31,10 +33,13 @@ class NumeralsController {
 					}
 				}
 			)
+			.skip(skip)
+			.limit(limit)
 			.toArray();
 	}
 
 	public convertToRoman(value: number): Promise<any> {
+		//TODO: return message and send request to worker
 		return this.model.create(
 			{
 				arabic: value,
