@@ -9,5 +9,8 @@ export default {
 	mongo: {
 		port: process.env.MONGO_PORT,
 		host: process.env.MONGO_HOST
+	},
+	worker:{
+		host: process.env.WORKER_HOST
 	}
 };

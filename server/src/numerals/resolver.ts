@@ -14,13 +14,8 @@ export const resolvers = {
 				return { message: error.message };
 			}
 		},
-		convertToRoman(_, { value }, __, ___) {
-			Controller.convertToRoman(value);
-			return { message: 'Value converting' };
-		},
-		convertToArabic: (_, args, __, ___) => {
-			return { message: 'Value converting' };
-		}
+		convertToRoman: (_, { value }, __, ___) => Controller.convertToRoman(value),
+		convertToArabic: (_, { value }, __, ___) => Controller.convertToArabic(value)
 	}
 	// Subscription: {}
 };

@@ -1,6 +1,16 @@
 import { gql } from 'apollo-server-fastify';
 
 export const typeDef = gql`
+	type ConvertRomanResult {
+		result: Roman
+		message: String!
+	}
+
+	type ConvertArabicResult {
+		result: Arabic
+		message: String!
+	}
+
 	type Arabic {
 		_id: String!
 		arabic: Int!
@@ -22,7 +32,7 @@ export const typeDef = gql`
 
 	type Mutation {
 		deleteAll: Message!
-		convertToRoman(value: Int!): Message!
-		convertToArabic(value: String!): Message!
+		convertToRoman(value: Int!): ConvertRomanResult
+		convertToArabic(value: String!): ConvertArabicResult
 	}
 `;
