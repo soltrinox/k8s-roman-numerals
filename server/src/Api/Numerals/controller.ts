@@ -1,6 +1,6 @@
 import { Model, Schema } from '@gkampitakis/mongo-client';
 import fetch from 'node-fetch';
-import configuration from '../../configuration';
+import configuration from '../../../configuration';
 import { ROMAN_REGEX } from './constants';
 
 class NumeralsController {
