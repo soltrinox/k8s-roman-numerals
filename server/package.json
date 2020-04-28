@@ -48,7 +48,10 @@
 		"collectCoverageFrom": [
 			"src/**/*.ts",
 			"!src/**/index.ts",
-			"!src/routes.ts",
+			"!src/**/resolver.ts",
+			"!src/**/typeDef.ts",
+			"!src/**/schema.ts",
+			"!src/**/constants.ts",
 			"!src/**/*.d.ts"
 		],
 		"coverageThreshold": {

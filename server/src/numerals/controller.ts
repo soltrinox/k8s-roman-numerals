@@ -60,7 +60,7 @@ class NumeralsController {
 		return {
 			...(result && {
 				result: {
-					roman: result.arabic,
+					roman: result.roman,
 					_id: result._id
 				}
 			}),
@@ -111,7 +111,5 @@ class NumeralsController {
 		return Number.isInteger(value) && value < 5000 && value >= 1;
 	}
 }
-
-//TODO: add tests
 
 export default new NumeralsController();
