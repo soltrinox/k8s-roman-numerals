@@ -2,12 +2,14 @@ import { gql } from 'apollo-server-fastify';
 
 export const typeDef = gql`
 	type ConvertRomanResult {
+		error: Boolean
 		result: Roman
 		message: String!
 	}
 
 	type ConvertArabicResult {
 		result: Arabic
+		error: Boolean
 		message: String!
 	}
 

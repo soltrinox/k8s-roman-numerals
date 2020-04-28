@@ -1,6 +1,7 @@
 import { Model, Schema } from '@gkampitakis/mongo-client';
 import fetch from 'node-fetch';
 import configuration from '../../configuration';
+import { ROMAN_REGEX } from './constants';
 
 class NumeralsController {
 	private model: Model;
@@ -41,6 +42,12 @@ class NumeralsController {
 	}
 
 	public async convertToRoman(value: number): Promise<any> {
+		if (!this.validArabic(value))
+			return {
+				message: 'Wrong input provided',
+				error: true
+			};
+
 		const result = await this.model.findOne(
 			{
 				arabic: value
@@ -62,6 +69,12 @@ class NumeralsController {
 	}
 
 	public async convertToArabic(value: string): Promise<any> {
+		if (!this.validRoman(value))
+			return {
+				message: 'Wrong input provided',
+				error: true
+			};
+
 		const result = await this.model.findOne(
 			{
 				roman: value
@@ -88,8 +101,17 @@ class NumeralsController {
 	private sendRequest(type: any, value: any) {
 		return fetch(`${configuration.worker.host}${type}/${value}`).then((res) => res.json());
 	}
+
+	private validRoman(value: string) {
+		const roman = value.toUpperCase();
+		return ROMAN_REGEX.test(roman);
+	}
+
+	private validArabic(value: number) {
+		return Number.isInteger(value) && value < 5000 && value >= 1;
+	}
 }
 
-//TODO: add validations ? 
+//TODO: add tests
 
 export default new NumeralsController();
