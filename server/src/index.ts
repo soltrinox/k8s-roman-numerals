@@ -3,6 +3,7 @@ import fastify, { FastifyInstance } from 'fastify';
 import schema from './schema';
 import configuration from '../configuration';
 import { MongoClient } from '@gkampitakis/mongo-client';
+import cors from 'fastify-cors';
 
 class Server {
 	private server: FastifyInstance;
@@ -24,6 +25,7 @@ class Server {
 	private setupServer() {
 		this.apollo = new ApolloServer({ schema });
 		this.server.register(this.apollo.createHandler());
+		this.server.register(cors, { origin: '*' });
 	}
 
 	private setupMongo() {
