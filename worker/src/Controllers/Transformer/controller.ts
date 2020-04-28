@@ -12,11 +12,10 @@ class Controller {
 
 	public RomanToArabic(req: FastifyRequest, res: FastifyReply<ServerResponse>): any {
 		const value = req.params.number.toUpperCase();
-		if (!value || !ROMAN_REGEX.test(value))
-			return this.handleError(req, res, 400, Error(`Incorrect Input: ${value}`));
+		if (!value || !ROMAN_REGEX.test(value)) return this.handleError(req, res, 400, Error(`Incorrect Input: ${value}`));
 
 		try {
-			this.redisClient.save('arabic', value, this.calculator.toArabic(value));
+			this.redisClient.publish(this.calculator.toArabic(value), value);
 		} catch (error) {
 			return this.handleError(req, res, 500, error);
 		}
@@ -30,7 +29,7 @@ class Controller {
 			return this.handleError(req, res, 400, Error(`Incorrect Input: ${req.params.number}`));
 
 		try {
-			this.redisClient.save('roman', value.toString(), this.calculator.toRoman(value));
+			this.redisClient.publish(value, this.calculator.toRoman(value));
 		} catch (error) {
 			return this.handleError(req, res, 500, error);
 		}
@@ -47,5 +46,3 @@ class Controller {
 
 export default new Controller();
 
-//TODO: Set up environment
-//TODO: docker dev and prod

@@ -9,7 +9,12 @@ export default class RedisClient {
 		this.client = createClient({ host, port, auth_pass: pass });
 	}
 
-	public save(type: 'arabic' | 'roman', key: string, value: any): void {
-		this.client.set(`${type}_${key}`, value);
+	public publish(arabic: number, roman: string): void {
+		const payload = {
+			arabic,
+			roman
+		};
+
+		this.client.publish('new_request', JSON.stringify(payload));
 	}
 }

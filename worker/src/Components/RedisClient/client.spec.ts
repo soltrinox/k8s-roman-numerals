@@ -23,18 +23,15 @@ describe('client', () => {
 		expect(ConstructorSpy).toHaveBeenNthCalledWith(1, { host: 'mockHost', port: 1000, auth_pass: '12345' });
 	});
 
-	it('Should call the set method', () => {
-		const client = new RedisClient();
+	it('Should call the publish method', () => {
+		const client = new RedisClient(),
+			payload = JSON.stringify({
+				arabic: 10,
+				roman: 'x'
+			});
 
-		client.save('arabic', '10', 10);
+		client.publish(10, 'x');
 
-		expect(SetSpy).toHaveBeenNthCalledWith(1, 'arabic_10', 10);
-	});
-
-	it('Should call the set method', () => {
-		const client = new RedisClient();
-
-		client.save('roman', '10', 10);
-		expect(SetSpy).toHaveBeenNthCalledWith(1, 'roman_10', 10);
+		expect(SetSpy).toHaveBeenNthCalledWith(1, 'new_request', payload);
 	});
 });

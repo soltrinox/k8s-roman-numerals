@@ -1,5 +1,5 @@
 export const REGEX_CONTROL = {
-	valid: true,
+	valid: true
 };
 
 export const RegexSpy = jest.fn();
@@ -8,7 +8,7 @@ export const ROMAN_REGEX = {
 	test(value) {
 		RegexSpy(value);
 		return REGEX_CONTROL.valid;
-	},
+	}
 };
 
 export class Calculator {
@@ -30,10 +30,10 @@ export class RedisClient {
 	public static SaveSpy = jest.fn();
 	public static Error = false;
 
-	public save(type: string, key: string, value: any) {
-        if (RedisClient.Error) throw new Error('Unexpected Error');
-        
-		RedisClient.SaveSpy(type, key, value);
+	public publish(arabic: number, roman: string) {
+		if (RedisClient.Error) throw new Error('Unexpected Error');
+
+		RedisClient.SaveSpy(arabic, roman);
 		return;
 	}
 }

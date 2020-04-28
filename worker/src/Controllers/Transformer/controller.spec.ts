@@ -76,7 +76,7 @@ describe('Transformer Controller', () => {
 			expect(SendSpy).toHaveBeenNthCalledWith(1, { message: 'Success' });
 			expect(RegexSpy).toHaveBeenNthCalledWith(1, '10');
 			expect(Calculator.ToArabicSpy).toHaveBeenNthCalledWith(1, '10');
-			expect(RedisClient.SaveSpy).toHaveBeenNthCalledWith(1, 'arabic', '10', '10');
+			expect(RedisClient.SaveSpy).toHaveBeenNthCalledWith(1, '10', '10');
 		});
 	});
 
@@ -131,7 +131,7 @@ describe('Transformer Controller', () => {
 			expect(StatusSpy).toHaveBeenNthCalledWith(1, 200);
 			expect(SendSpy).toHaveBeenNthCalledWith(1, { message: 'Success' });
 			expect(Calculator.ToRomanSpy).toHaveBeenNthCalledWith(1, 10);
-			expect(RedisClient.SaveSpy).toHaveBeenNthCalledWith(1, 'roman', '10', 10);
+			expect(RedisClient.SaveSpy).toHaveBeenNthCalledWith(1, 10, 10);
 		});
 	});
 

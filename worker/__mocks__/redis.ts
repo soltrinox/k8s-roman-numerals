@@ -1,8 +1,8 @@
 export function createClient(param) {
 	ConstructorSpy(param);
 	return {
-		set(key: string, value: any) {
-			SetSpy(key, value);
+		publish(arabic: number, roman: string) {
+			SetSpy(arabic, roman);
 			return;
 		}
 	};
