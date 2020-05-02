@@ -1,2 +1,1 @@
-export { resolvers } from './resolver';
-export { typeDef } from './typeDef';
+export { resolvers, typeDef } from './resolver';
