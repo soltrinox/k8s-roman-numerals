@@ -7,7 +7,7 @@ jest.mock('./constants', () => ({
 		test: (value) => REGEX_CONTROL
 	}
 }));
-jest.mock('../../configuration', () => ({
+jest.mock('../../../configuration', () => ({
 	worker: {
 		host: 'mockHost/'
 	}

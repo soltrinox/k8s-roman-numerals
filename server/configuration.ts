@@ -10,7 +10,12 @@ export default {
 		port: process.env.MONGO_PORT,
 		host: process.env.MONGO_HOST
 	},
-	worker:{
+	redis: {
+		port: parseInt(process.env.REDIS_PORT),
+		host: process.env.REDIS_HOST,
+		pass: process.env.PASS
+	},
+	worker: {
 		host: process.env.WORKER_HOST
 	}
 };
