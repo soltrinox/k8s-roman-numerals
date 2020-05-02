@@ -1,17 +1,19 @@
 import { ApolloServer } from 'apollo-server-fastify';
 import fastify, { FastifyInstance } from 'fastify';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { MongoClient } from '@gkampitakis/mongo-client';
+import { RedisClient } from './Components';
+import cors from 'fastify-cors';
 import schema from './schema';
 import configuration from '../configuration';
-import { MongoClient } from '@gkampitakis/mongo-client';
-import cors from 'fastify-cors';
-import { RedisClient } from './Components';
 
 class Server {
-	private server: FastifyInstance;
+	private fastifyInstance: FastifyInstance;
 	private apollo: ApolloServer;
 
 	public constructor() {
-		this.server = fastify({
+		this.fastifyInstance = fastify({
 			logger: {
 				prettyPrint: {
 					colorize: true,
@@ -25,8 +27,9 @@ class Server {
 
 	private setupServer() {
 		this.apollo = new ApolloServer({ schema });
-		this.server.register(this.apollo.createHandler());
-		this.server.register(cors, { origin: '*' });
+		this.fastifyInstance.register(this.apollo.createHandler());
+		this.fastifyInstance.register(cors, { origin: '*' });
+
 		RedisClient.initClient();
 	}
 
@@ -44,7 +47,16 @@ class Server {
 	}
 
 	public start() {
-		return this.server.listen(configuration.port, '0.0.0.0');
+		return this.fastifyInstance.listen(configuration.port, '0.0.0.0').then(() => {
+			new SubscriptionServer(
+				{
+					execute,
+					subscribe,
+					schema
+				},
+				{ server: this.fastifyInstance.server }
+			);
+		});
 	}
 }
 

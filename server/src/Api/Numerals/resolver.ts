@@ -19,9 +19,11 @@ export const resolvers = {
 		convertToRoman: (_, { value }, __, ___) => Controller.convertToRoman(value),
 		convertToArabic: (_, { value }, __, ___) => Controller.convertToArabic(value)
 	},
-	// Subscription: {
-	// 	numeralComputation: () => RedisClient.pubSub.asyncIterator('new_value')
-	// }
+	Subscription: {
+		numeralComputation: {
+			subscribe: () => RedisClient.asyncIterator('new_value')
+		}
+	}
 };
 
 export const typeDef = gql`
@@ -62,13 +64,13 @@ export const typeDef = gql`
 		convertToArabic(value: String!): ConvertArabicResult
 	}
 
-	# type Subscription {
-	# 	numeralComputation: subscriptionPayload!
-	# }
+	type Subscription {
+		numeralComputation: subscriptionPayload
+	}
 
-	# type subscriptionPayload {
-	# 	arabic: Int!
-	# 	roman: String!
-	# 	_id: String!
-	# }
+	type subscriptionPayload {
+		arabic: Int
+		roman: String
+		_id: String
+	}
 `;

@@ -26,11 +26,12 @@ class RedisClient {
 		this.setupModel();
 	}
 
-	public initClient(): void {
+	public initClient(): void { //TODO: this is not scalable and should not leave here
 		this.redisPubSub.subscribe('new_request', async (message: { arabic: number; roman: string }) => {
 			const doc = await this.model.create(message, { lean: true });
+			console.log(doc);
 
-			this.redisPubSub.publish('new_value', doc);
+			this.redisPubSub.publish('new_value', { numeralComputation: doc });
 		});
 	}
 
