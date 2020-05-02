@@ -47,7 +47,7 @@ describe('RedisClient', () => {
 
 			setTimeout(() => {
 				expect(RedisPubSub.SubscribeSpy).toHaveBeenNthCalledWith(1, 'new_request', expect.any(Function));
-				expect(CREATE_SPY).toHaveBeenNthCalledWith(1, { arabic: 10, roman: '10' }, true);
+				expect(CREATE_SPY).toHaveBeenNthCalledWith(1, { arabic: 10, roman: '10' }, { lean: true });
 				expect(RedisPubSub.PublishSpy).toHaveBeenNthCalledWith(1, 'new_value', 'mockDoc');
 				done();
 			}, 100);

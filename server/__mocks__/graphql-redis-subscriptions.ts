@@ -15,7 +15,7 @@ export class RedisPubSub {
 	public async subscribe(channel: string, callback) {
 		RedisPubSub.SubscribeSpy(channel, callback);
 
-		await callback(JSON.stringify(RedisPubSub.MockValue));
+		await callback(RedisPubSub.MockValue);
 	}
 
 	public publish(channel: string, value: any) {

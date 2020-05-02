@@ -9,8 +9,6 @@ class RedisClient {
 	private static instance: RedisClient;
 
 	public static getInstance() {
-		console.log('test');
-		
 		if (!RedisClient.instance) RedisClient.instance = new RedisClient();
 
 		return RedisClient.instance;
@@ -29,13 +27,8 @@ class RedisClient {
 	}
 
 	public initClient(): void {
-		this.redisPubSub.subscribe('new_request', async (message: string) => {
-			const payload: {
-				arabic: number;
-				roman: string;
-			} = JSON.parse(message);
-
-			const doc = await this.model.create(payload, true);
+		this.redisPubSub.subscribe('new_request', async (message: { arabic: number; roman: string }) => {
+			const doc = await this.model.create(message, { lean: true });
 
 			this.redisPubSub.publish('new_value', doc);
 		});
@@ -47,7 +40,7 @@ class RedisClient {
 
 	private setupModel() {
 		this.model = Model(
-			'numerals',	
+			'numerals',
 			new Schema({
 				properties: {
 					arabic: {

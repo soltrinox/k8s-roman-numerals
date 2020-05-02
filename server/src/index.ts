@@ -4,6 +4,7 @@ import schema from './schema';
 import configuration from '../configuration';
 import { MongoClient } from '@gkampitakis/mongo-client';
 import cors from 'fastify-cors';
+import { RedisClient } from './Components';
 
 class Server {
 	private server: FastifyInstance;
@@ -26,6 +27,7 @@ class Server {
 		this.apollo = new ApolloServer({ schema });
 		this.server.register(this.apollo.createHandler());
 		this.server.register(cors, { origin: '*' });
+		RedisClient.initClient();
 	}
 
 	private setupMongo() {

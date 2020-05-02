@@ -52,18 +52,17 @@ class NumeralsController {
 			{
 				arabic: value
 			},
-			true
+			{
+				lean: true,
+				fields: {
+					roman: 1
+				}
+			}
 		);
 
 		if (!result) this.sendRequest('roman', value);
-		//BUG: update this when mongo client is update
 		return {
-			...(result && {
-				result: {
-					roman: result.roman,
-					_id: result._id
-				}
-			}),
+			...{ result },
 			message: result ? 'Value cached' : 'Converting value'
 		};
 	}
@@ -79,19 +78,17 @@ class NumeralsController {
 			{
 				roman: value
 			},
-			true
+			{
+				lean: true,
+				fields: {
+					arabic: 1
+				}
+			}
 		);
-
-		//BUG: update this when mongo client is update
 
 		if (!result) this.sendRequest('arabic', value);
 		return {
-			...(result && {
-				result: {
-					arabic: result.arabic,
-					_id: result._id
-				}
-			}),
+			...{ result },
 			message: result ? 'Value cached' : 'Converting value'
 		};
 	}
