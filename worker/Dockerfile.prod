@@ -12,12 +12,14 @@ RUN npm run test && npm run tsc
 
 RUN npm prune --production
 
-RUN rm -rf __mocks__ src coverage tsconfig.json *.ts Dockerfile.prod .prettierc
+#------------ PROD STAGE ------------#
 
 FROM node:alpine
 
 WORKDIR /app
 
-COPY --from=testing /app . 
+COPY --from=testing /app/dist ./dist 
+COPY --from=testing /app/node_modules ./node_modules
+COPY --from=testing /app/.env.prod /app/package.json  ./
 
 CMD ["npm","run","start:prod"]
