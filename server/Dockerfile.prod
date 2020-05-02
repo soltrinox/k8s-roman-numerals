@@ -1,0 +1,25 @@
+FROM node:alpine as testing
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run test && npm run tsc
+
+RUN npm prune --production
+
+#------------ PROD STAGE ------------#
+
+FROM node:alpine
+
+WORKDIR /app
+
+COPY --from=testing /app/dist ./dist 
+COPY --from=testing /app/node_modules ./node_modules
+COPY --from=testing /app/.env.production /app/package.json  ./
+
+CMD ["npm","run","start:prod"]

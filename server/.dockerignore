@@ -1,0 +1,9 @@
+coverage
+node_modules
+.gitignore
+.prettierc
+Dockerfile.dev
+Dockerfile.prod
+README.md
+!.env.production
+!.env.dev

@@ -15,6 +15,20 @@ services:
       - 4000:4000
     environment:
       - PORT=4000
+  server:
+    container_name: server
+    build:
+      context: ./server
+      # dockerfile: Dockerfile.dev # For development
+      dockerfile: Dockerfile.prod
+    restart: always
+    # volumes: # For development live reload support
+    #   - /app/node_modules
+    #   - ./server:/app
+    ports:
+      - 5000:5000
+    environment:
+      - PORT=5000
   redis:
     container_name: redis
     image: 'redis:4-alpine'
