@@ -1,0 +1,14 @@
+.footer {
+	width: 100%;
+	background-color: #282c34;
+	color: white;
+	display: flex;
+	align-items: center;
+	height: 100px;
+	position: absolute;
+	bottom: 0px;
+
+	.creator {
+		margin-left: 20px;
+	}
+}

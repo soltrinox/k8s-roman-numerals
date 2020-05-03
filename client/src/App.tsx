@@ -1,9 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import './App.css';
-
-//TODO: add some scss with node sas and add some UX
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 
 const test = gql`
 	{
@@ -22,11 +21,13 @@ function App() {
 
 	return (
 		<div className="App">
-			<header className="App-header">
+			<Header />
+			<main>
 				{data.arabics.map((value: any) => (
 					<div key={value._id}>{value.arabic}</div>
 				))}
-			</header>
+			</main>
+			<Footer />
 		</div>
 	);
 }
