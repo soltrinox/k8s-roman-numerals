@@ -1,0 +1,63 @@
+.home {
+	display: flex;
+	flex-direction: column;
+
+	.tabs {
+		border: 1px solid #ccc;
+		display: table;
+		background-color: #f1f1f1;
+
+		.delete {
+			background-color: red;
+			float: right;
+			color: white;
+			font-weight: 700;
+			padding: 10px 14px;
+			margin: 6px 15px;
+			border-radius: 15px;
+		}
+
+		.tabLink {
+			background-color: inherit;
+			float: left;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			padding: 14px 16px;
+			transition: 0.3s;
+			font-size: 17px;
+		}
+
+		.tabLink.active {
+			background-color: #ccc;
+		}
+
+		.tabLink:hover {
+			background-color: #ddd;
+		}
+	}
+
+	.content {
+		width: 500px;
+		height: 400px;
+		max-height: 400px;
+		padding: 35px 12px;
+		border: 1px solid #ccc;
+		border-top: none;
+
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+
+		.numerals {
+			font-weight: 700;
+			font-size: 25px;
+			text-align: center;
+			padding: 5px;
+			border-bottom: 1px solid #d2d2d2;
+			width: 60%;
+			margin: 10px;
+		}
+	}
+}

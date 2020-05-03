@@ -5,10 +5,13 @@
 @import './header.scss';
 @import './footer.scss';
 @import './technologies.scss';
+@import './home.scss';
+@import './loader.scss';
 
 #main {
 	max-width: 800px;
 	display: flex;
 	justify-content: center;
 	margin: auto;
+	margin-top: 40px;
 }
