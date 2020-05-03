@@ -4,3 +4,11 @@
 
 @import './header.scss';
 @import './footer.scss';
+@import './technologies.scss';
+
+#main {
+	max-width: 800px;
+	display: flex;
+	justify-content: center;
+	margin: auto;
+}

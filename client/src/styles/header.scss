@@ -11,6 +11,7 @@
 		display: flex;
 		flex: 1;
 		margin-left: 20px;
+		cursor: pointer;
 	}
 
 	.navigation {
@@ -25,6 +26,7 @@
 			font-weight: 700;
 			text-decoration: none;
 			background-color: #61dafb;
+			margin: 10px;
 		}
 	}
 }

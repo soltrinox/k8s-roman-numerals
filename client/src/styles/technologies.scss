@@ -1,0 +1,24 @@
+.technologies {
+	h2,
+	h3 {
+		text-align: center;
+	}
+
+	.logos {
+        justify-content: center;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		flex-wrap: wrap;
+		height: 100%;
+		div {
+			margin: auto;
+			margin: auto;
+			margin-left: 20px;
+			margin-right: 20px;
+			img {
+				width: 100px;
+			}
+		}
+	}
+}
