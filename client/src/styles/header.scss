@@ -3,7 +3,28 @@
 	background-color: #282c34;
 	color: white;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	height: 75px;
+
+	.title {
+		display: flex;
+		flex: 1;
+		margin-left: 20px;
+	}
+
+	.navigation {
+		display: flex;
+		flex: 1;
+		justify-content: flex-end;
+		margin-right: 20px;
+		a {
+			padding: 10px 20px;
+			border-radius: 10px;
+			color: white;
+			font-weight: 700;
+			text-decoration: none;
+			background-color: #61dafb;
+		}
+	}
 }
