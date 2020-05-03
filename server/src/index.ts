@@ -3,7 +3,6 @@ import fastify, { FastifyInstance } from 'fastify';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { MongoClient } from '@gkampitakis/mongo-client';
-import { RedisClient } from './Components';
 import cors from 'fastify-cors';
 import schema from './schema';
 import configuration from '../configuration';
@@ -29,8 +28,6 @@ class Server {
 		this.apollo = new ApolloServer({ schema });
 		this.fastifyInstance.register(this.apollo.createHandler());
 		this.fastifyInstance.register(cors, { origin: '*' });
-
-		RedisClient.initClient();
 	}
 
 	private setupMongo() {

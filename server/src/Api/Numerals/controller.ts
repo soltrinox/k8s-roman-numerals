@@ -2,24 +2,14 @@ import { Model, Schema } from '@gkampitakis/mongo-client';
 import fetch from 'node-fetch';
 import configuration from '../../../configuration';
 import { ROMAN_REGEX } from './constants';
+import { RedisClient } from '../../Components';
 
 class NumeralsController {
 	private model: Model;
+
 	public constructor() {
-		this.model = Model(
-			'numerals',
-			new Schema({
-				properties: {
-					arabic: {
-						type: 'number'
-					},
-					roman: {
-						type: 'string'
-					}
-				},
-				type: 'object'
-			})
-		);
+		this.setupModel();
+		this.setupRedis();
 	}
 
 	public deleteAll(): Promise<any> {
@@ -106,6 +96,31 @@ class NumeralsController {
 
 	private validArabic(value: number) {
 		return Number.isInteger(value) && value < 5000 && value >= 1;
+	}
+
+	private setupModel(): void {
+		this.model = Model(
+			'numerals',
+			new Schema({
+				properties: {
+					arabic: {
+						type: 'number'
+					},
+					roman: {
+						type: 'string'
+					}
+				},
+				type: 'object'
+			})
+		);
+	}
+
+	private setupRedis() {
+		RedisClient.subscribe('new_request', async (message: { arabic: number; roman: string }) => {
+			const doc = await this.model.create(message, { lean: true });
+
+			RedisClient.publish('new_value', { numeralComputation: doc });
+		});
 	}
 }
 
