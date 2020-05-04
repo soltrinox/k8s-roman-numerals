@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const convertToRoman = gql`
 	mutation convertToRoman($value: Int!) {

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, useMutation } from '@apollo/react-hooks';
+import {
+	useLazyQuery,
+	useMutation,
+	useSubscription,
+} from '@apollo/react-hooks';
 import { ArabicList, RomanList } from '../graphql/queries';
 import {
 	deleteAll as deleteMutation,
 	convertToArabic,
 	convertToRoman,
 } from '../graphql/mutations';
+import { numeralSubscription } from '../graphql/subscriptions';
 import Loader from '../Components/Loader';
 
 export default function Main() {
-	const [tab, setTab] = useState('arabic');
-	const [romanForm, setRomanForm] = useState('');
-	const [arabicForm, setArabicForm] = useState('');
+	const [tab, setTab] = useState('arabic'),
+		[romanForm, setRomanForm] = useState(''),
+		[calculatedValue, setCalculatedValue] = useState(''),
+		[arabicForm, setArabicForm] = useState(''),
+		[list, setList] = useState({ roman: [], arabic: [] }),
+		[getArabic, { loading: loadingArabic, data: Arabic }] = useLazyQuery(
+			ArabicList(100)
+		),
+		[getRoman, { loading: loadingRoman, data: Roman }] = useLazyQuery(
+			RomanList(100)
+		);
 
-	const [getArabic, { loading: loadingArabic, data: Arabic }] = useLazyQuery(
-		ArabicList(100)
-	);
-	const [getRoman, { loading: loadingRoman, data: Roman }] = useLazyQuery(
-		RomanList(100)
-	);
+	let { data: subscriptionData } = useSubscription(numeralSubscription);
 
 	const [deleteAll] = useMutation(deleteMutation()),
 		[calculateRoman] = useMutation(convertToRoman),
@@ -34,21 +42,58 @@ export default function Main() {
 	}
 
 	useEffect(() => {
+		if (subscriptionData) {
+			setList({
+				roman: list.roman.concat(subscriptionData.numeralComputation),
+				arabic: list.arabic.concat(subscriptionData.numeralComputation),
+			});
+
+			showCalculation();
+		}
+	}, [subscriptionData]);
+
+	useEffect(() => {
+		if (Roman)
+			setList({
+				...list,
+				roman: Roman.romans,
+			});
+	}, [Roman]);
+
+	useEffect(() => {
+		if (Arabic)
+			setList({
+				...list,
+				arabic: Arabic.arabics,
+			});
+	}, [Arabic]);
+
+	useEffect(() => {
 		getArabic();
 	}, []);
 
 	function returnData(): any[] {
 		return tab === 'arabic'
-			? Arabic?.arabics.map((value: any) => (
+			? list.arabic.map((value: any) => (
 					<span className="numerals" key={value._id}>
 						{value.arabic}
 					</span>
 			  ))
-			: Roman?.romans.map((value: any) => (
+			: list.roman.map((value: any) => (
 					<span className="numerals" key={value._id}>
 						{value.roman}
 					</span>
 			  ));
+	}
+
+	function showCalculation() {
+		if (subscriptionData) {
+			setCalculatedValue(subscriptionData.numeralComputation.arabic);
+		}
+
+		setTimeout(() => {
+			setCalculatedValue('');
+		}, 2000);
 	}
 
 	function isLoading() {
@@ -57,8 +102,10 @@ export default function Main() {
 
 	function deleteNumerals() {
 		deleteAll();
-		Arabic.arabics = [];
-		if (Roman) Roman.romans = [];
+		setList({
+			roman: [],
+			arabic: [],
+		});
 	}
 
 	function handleChange(type: string, e: any) {
@@ -130,11 +177,7 @@ export default function Main() {
 					</div>
 				</div>
 			</div>
-			<div className="newValue">70</div>
+			<div className="newValue">{calculatedValue}</div>
 		</div>
 	);
 }
-
-//TODO: add subscription
-//TODO: verify on forms
-//Error handling 

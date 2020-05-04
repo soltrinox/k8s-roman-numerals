@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const RomanList = (number: number, skip = 0) => gql`
 	{
