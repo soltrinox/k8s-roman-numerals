@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/main.scss';
 import App from './App';
+import configuration from './configuration';
 import * as serviceWorker from './serviceWorker';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -10,9 +10,13 @@ import { getMainDefinition } from 'apollo-utilities';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
+import './styles/main.scss';
+
+console.log(configuration);
+
 
 const wsLink = new WebSocketLink({
-	uri: `ws://localhost:5000/`,
+	uri: configuration.ws,
 	options: {
 		reconnect: true,
 	},
@@ -29,7 +33,7 @@ const link = split(
 	},
 	wsLink,
 	new HttpLink({
-		uri: 'http://localhost:5000/graphql',
+		uri: configuration.api,
 		credentials: 'same-origin',
 	})
 );
