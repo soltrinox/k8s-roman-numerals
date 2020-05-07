@@ -10,13 +10,16 @@ COPY . .
 
 RUN npm run build
 
-#------------ PROD STAGE ------------#
+#------------ PROD STAGE ------------#  
 
 FROM node:alpine
 
+RUN npm i -g serve
+
 WORKDIR /app
 
-COPY --from=build  /app/build .
+COPY --from=build /app/build .
 
-CMD [] 
-#TODO: 
+EXPOSE 3000
+
+CMD ["serve", "-p", "3000", "-s", "."]
