@@ -25,7 +25,12 @@ class Server {
 	}
 
 	private setupServer() {
-		this.apollo = new ApolloServer({ schema });
+		this.apollo = new ApolloServer({
+			schema,
+			subscriptions: {
+				path: '/websocket'
+			}
+		});
 		this.fastifyInstance.register(this.apollo.createHandler());
 		this.fastifyInstance.register(cors, { origin: '*' });
 	}
