@@ -12,9 +12,6 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
 import './styles/main.scss';
 
-console.log(configuration);
-
-
 const wsLink = new WebSocketLink({
 	uri: configuration.ws,
 	options: {

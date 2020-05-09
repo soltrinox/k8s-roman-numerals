@@ -86,7 +86,7 @@ class NumeralsController {
 	private sendRequest(type: 'roman', value: number): Promise<Response>;
 	private sendRequest(type: 'arabic', value: string): Promise<Response>;
 	private sendRequest(type: any, value: any) {
-		return fetch(`${configuration.worker.host}${type}/${value}`).then((res) => res.json());
+		return fetch(`${configuration.worker.host}/${type}/${value}`).then((res) => res.json());
 	}
 
 	private validRoman(value: string) {

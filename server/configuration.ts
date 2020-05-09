@@ -7,8 +7,10 @@ dotenv.config({ path });
 export default {
 	port: parseInt(process.env.PORT),
 	mongo: {
-		port: process.env.MONGO_PORT,
-		host: process.env.MONGO_HOST
+		port: parseInt(process.env.MONGO_PORT),
+		host: process.env.MONGO_HOST,
+		user: process.env.MONGO_USER,
+		password: process.env.MONGO_PASS
 	},
 	redis: {
 		port: parseInt(process.env.REDIS_PORT),

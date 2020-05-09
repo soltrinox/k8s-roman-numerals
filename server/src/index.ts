@@ -36,8 +36,13 @@ class Server {
 	}
 
 	private setupMongo() {
-		const { host, port } = configuration.mongo;
-		MongoClient.connect(`${host}:${port}`, 'numerals', {
+		const { host, port, password, user } = configuration.mongo;
+
+		let url = `mongodb://${user}:${password}@${host}`;
+
+		if (port) url = url + `:${port}`;
+
+		MongoClient.connect(url, 'numerals', {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		})

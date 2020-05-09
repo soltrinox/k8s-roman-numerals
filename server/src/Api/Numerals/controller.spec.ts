@@ -9,7 +9,7 @@ jest.mock('./constants', () => ({
 }));
 jest.mock('../../../configuration', () => ({
 	worker: {
-		host: 'mockHost/'
+		host: 'mockHost'
 	}
 }));
 jest.mock('@gkampitakis/mongo-client');
