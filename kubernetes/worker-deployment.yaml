@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers:
+        - name: worker
+          env:
+            - name: REDIS_HOST
+              value: redis-svc
+            - name: REDIS_PORT
+              value: '6379'
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: redis-pass
+                  key: REDIS_PASS
+          image: gkabitakis/worker:v1.0.0
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker-svc
+spec:
+  type: ClusterIP
+  selector:
+    component: worker
+  ports:
+    - port: 5001 #Port to access this service
+      targetPort: 5000 #Port of pointing resource
