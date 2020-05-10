@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: client
+  template:
+    metadata:
+      labels:
+        component: client
+    spec:
+      containers:
+        - name: client
+          image: gkabitakis/client:v1.0.4
+          ports:
+            - containerPort: 3000 #Port pointing to container must be the same with exported port from the image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-svc
+spec:
+  type: ClusterIP
+  selector:
+    component: client
+  ports:
+    - port: 3000 #Port to access this service
+      targetPort: 3000 #Port of pointing resource
