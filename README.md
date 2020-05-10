@@ -7,7 +7,7 @@ This a project trying to understand various concepts about dockerizing javascrip
 This is a summary of the services that are being created in this project
 
 <p align="center">
-    <img src="./resources/k8sDiagram.png">
+    <img src="./resources/infra.png">
 </p>
 
 **Services**
@@ -68,5 +68,48 @@ Each service has a dedicated file for development and production. The developmen
   docker-compose stop/run/build <service Name>
   ```
 
+**Images on Docker Hub**
+
+- [gkabitakis/server](https://hub.docker.com/repository/docker/gkabitakis/server)
+- [gkabitakis/worker](https://hub.docker.com/repository/docker/gkabitakis/worker)
+- [gkabitakis/client](https://hub.docker.com/repository/docker/gkabitakis/client)
+
 ## Kubernetes
 
+<p align="center">
+    <img src="./resources/k8s.png">
+</p>
+
+**Local Deployment** with [minikube](https://github.com/kubernetes/minikube).
+
+**Useful Commands**
+
+- `minikube start` For starting minikube.
+- `minikube delete` For deleting all contents.
+- `minikube ip` Get the ip of the minikube.
+
+
+### Steps in order to run this locally on minikube:
+
+- Setting secrets for `redis` and `mongodb`.
+  ```bash
+  kubectl create secret generic redis-pass --from-literal="REDIS_PASS=<password>"
+
+  kubectl create secret generic mongo-pass --from-literal="MONGO_PASS=<password>"
+
+  # You can verify that they are created by running
+  kubectl get secrets
+  ``` 
+- Create the persistent volume claim for MongoDB.
+  ```bash
+  kubectl apply -f database-pvc.yaml
+  ```
+- Create both deployments for the databases (redis/mongo).
+  ```bash
+  kubectl apply -f redis-deployment.yaml
+
+  kubectl apply -f mongo-deployment.yaml
+  ```
+- Finally you can apply all the services in this order worker, client, server and finally the ingress.
+
+If everything is working correctly you can navigate to your browser at minikube's IP.
