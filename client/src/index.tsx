@@ -13,7 +13,7 @@ import { split } from 'apollo-link';
 import './styles/main.scss';
 
 const wsLink = new WebSocketLink({
-	uri: configuration.ws,
+	uri: `ws://${window.location.host}${configuration.ws}`,
 	options: {
 		reconnect: true,
 	},
