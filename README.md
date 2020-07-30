@@ -2,6 +2,8 @@
 
 This a project trying to understand various concepts about dockerizing javascript applications and trying create manifest files for k8s.
 
+![visitors](https://git-visitors.gkampitakis.vercel.app/api/k8s_roman_numerals)
+
 ## Overview
 
 This is a summary of the services that are being created in this project
